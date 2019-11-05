@@ -3,6 +3,13 @@
 #include <arpa/inet.h>
 #include <net/ethernet.h>
 
+struct udpheader {
+  u_int16_t udp_sport;/* source port */
+  u_int16_t udp_dport;/* destination port */
+  u_int16_t udp_ulen; /* udp length */
+  u_int16_t udp_sum;  /* udp checksum */
+};
+
 /* Ethernet header */
 struct ethheader {
   u_char  ether_dhost[ETHER_ADDR_LEN]; /* destination host address */
@@ -53,6 +60,12 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header,
             printf("   Protocol: others\n");
             return;
     }
+    struct udpheader *udp = (struct udpheader *)
+                        (packet + sizeof(struct ethheader) + sizeof(struct ipheader));
+char *msg = malloc(udp->udp_ulen * sizeof(char));
+msg = packet +  sizeof(struct ethheader) + sizeof(struct ipheader) + sizeof(struct udpheader);
+printf(" Message: %s\n", msg);
+
   }
 }
 
