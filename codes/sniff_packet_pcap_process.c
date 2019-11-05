@@ -53,6 +53,11 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header,
         case IPPROTO_UDP:
             printf("   Protocol: UDP\n");
             return;
+            struct udpheader *udp = (struct udpheader *)
+                        (packet + sizeof(struct ethheader) + sizeof(struct ipheader));
+            char *msg = malloc(udp->udp_ulen * sizeof(char));
+            msg = packet +  sizeof(struct ethheader) + sizeof(struct ipheader) + sizeof(struct udpheader);
+            printf(" Message: %s\n", msg);
         case IPPROTO_ICMP:
             printf("   Protocol: ICMP\n");
             return;
@@ -60,12 +65,6 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header,
             printf("   Protocol: others\n");
             return;
     }
-    struct udpheader *udp = (struct udpheader *)
-                        (packet + sizeof(struct ethheader) + sizeof(struct ipheader));
-char *msg = malloc(udp->udp_ulen * sizeof(char));
-msg = packet +  sizeof(struct ethheader) + sizeof(struct ipheader) + sizeof(struct udpheader);
-printf(" Message: %s\n", msg);
-
   }
 }
 
