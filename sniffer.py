@@ -3,7 +3,7 @@ from scapy.all import *
 
 def print_pkt():
   pkt.show()
-pkt = sniff(filter = 'icmp', timeout = 15, count = 15)
+pkt = sniff(filter = 'icmp', timeout = 15)
 
 for packet in pkt:
   print("Gotcha")
