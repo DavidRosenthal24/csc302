@@ -7,9 +7,8 @@ b = ICMP()
 
 def print_pkt(pkt):
   pkt.show()
-
-pkt = sniff(filter = 'icmp')
 reply = sr1(a/b)
+pkt = sniff(filter = 'icmp')
 
 for packet in pkt:
   print(packet[IP].scr)
