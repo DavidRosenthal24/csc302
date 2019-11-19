@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from scapy.all import *
 
-def print_pkt():
+def print_pkt(pkt):
   pkt.show()
 pkt = sniff(filter = 'icmp', timeout = 15)
 
